@@ -24,7 +24,6 @@ public class User implements Serializable {
     private String surname;
     @Column(unique = true)
     private String username; // if user uses this instead of name/surname
-    @Column(unique = true)
     private String password;
     @Column(columnDefinition = "boolean default false")
     private boolean isVerified;
