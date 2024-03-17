@@ -1,5 +1,6 @@
 package com.smrt.smartdiagnostics.Services;
 
+import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Models.Verification;
 import com.smrt.smartdiagnostics.Repositories.VerificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,15 @@ public class VerificationService {
         } else {
             throw  new IllegalStateException("Verification for provided email already exists");
         }
+    }
+
+    public void confirmVerification(String code) {
+        Verification verification = verificationRepository.getVerificationByCode(code);
+        verificationRepository.delete(verification);
+    }
+
+    public String getEmailByCode(String code) {
+        Verification verification = verificationRepository.getVerificationByCode(code);
+        return verification.getEmail();
     }
 }

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface VerificationRepository extends JpaRepository<Verification, Long> {
     boolean existsByCode(String code);
     boolean existsByEmail(String email);
+
+    Verification getVerificationByCode(String code);
 }

@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -27,5 +29,13 @@ public class UserService {
         } else {
             throw new IllegalStateException("An account exists with the provided email.");
         }
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
+
+    public void updateUser(User user) {
+        userRepository.saveAndFlush(user);
     }
 }
