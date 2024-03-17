@@ -1,7 +1,7 @@
 package com.smrt.smartdiagnostics.Services;
 
 import com.smrt.smartdiagnostics.Repositories.UserRepository;
-import com.smrt.smartdiagnostics.Users.User;
+import com.smrt.smartdiagnostics.Models.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
