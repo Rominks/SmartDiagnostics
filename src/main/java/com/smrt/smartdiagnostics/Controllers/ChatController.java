@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/***REMOVED***/chat")
 public class ChatController {
-    private final User currentUser;
-//    private final ChatService chatService;
+//    private final User currentUser;
+    private final ChatService chatService;
 
     @Autowired
-    public ChatController(User currentUser, ChatService chatService) {
-        this.currentUser = currentUser;
-//        this.chatService = chatService;
+    public ChatController(/*User currentUser,*/ ChatService chatService) {
+//        this.currentUser = currentUser;
+        this.chatService = chatService;
     }
 }
