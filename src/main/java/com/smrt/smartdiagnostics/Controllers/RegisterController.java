@@ -1,7 +1,7 @@
 package com.***REMOVED***.smartdiagnostics.Controllers;
 
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.***REMOVED***.smartdiagnostics.Services.UserService;
+import com.***REMOVED***.smartdiagnostics.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +19,12 @@ public class RegisterController {
     }
 
     @PostMapping("/confirm")
-    public void createUser(@RequestBody JSONWrappedObject object) {
-        System.out.println(object);
+    public void submitUser(@RequestBody User user) {
+        try {
+            userService.createUser(user);
+            sendVerification(user.getEmail());
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 }
