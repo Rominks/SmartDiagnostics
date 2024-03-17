@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.Users;
+package com.***REMOVED***.smartdiagnostics.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,4 +26,6 @@ public class User implements Serializable {
     private String username; // if user uses this instead of name/surname
     @Column(unique = true)
     private String password;
+    @Column(columnDefinition = "boolean default false")
+    private boolean isVerified;
 }
