@@ -2,6 +2,7 @@ package com.***REMOVED***.smartdiagnostics.Controllers;
 
 import com.***REMOVED***.smartdiagnostics.Models.User;
 import com.***REMOVED***.smartdiagnostics.Services.UserService;
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,9 @@ public class ProfileController {
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (JDBCConnectionException jdbc) {
+            jdbc.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
