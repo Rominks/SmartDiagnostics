@@ -34,6 +34,9 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
     }
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
+    }
 
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
