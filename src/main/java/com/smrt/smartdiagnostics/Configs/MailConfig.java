@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.Configs;
+package com.smrt.smartdiagnostics.Configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;

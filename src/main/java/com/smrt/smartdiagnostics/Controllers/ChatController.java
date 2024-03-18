@@ -1,12 +1,12 @@
-package com.***REMOVED***.smartdiagnostics.Controllers;
+package com.smrt.smartdiagnostics.Controllers;
 
-import com.***REMOVED***.smartdiagnostics.Services.ChatService;
+import com.smrt.smartdiagnostics.Services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/***REMOVED***/chat")
+@RequestMapping("/smrt/chat")
 public class ChatController {
 //    private final User currentUser;
     private final ChatService chatService;

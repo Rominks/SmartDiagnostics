@@ -1,7 +1,7 @@
-package com.***REMOVED***.smartdiagnostics.Controllers;
+package com.smrt.smartdiagnostics.Controllers;
 
-import com.***REMOVED***.smartdiagnostics.Models.User;
-import com.***REMOVED***.smartdiagnostics.Services.UserService;
+import com.smrt.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/***REMOVED***/login")
+@RequestMapping("/smrt/login")
 public class LoginController {
     private final UserService userService;
 
@@ -22,4 +22,5 @@ public class LoginController {
     public String submitLogin(@RequestBody User user) {
         return "Prasom";
     }
+
 }
