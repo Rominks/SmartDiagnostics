@@ -22,4 +22,5 @@ public class LoginController {
     public String submitLogin(@RequestBody User user) {
         return "Prasom";
     }
+
 }
