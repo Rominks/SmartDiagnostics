@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.Services;
+package com.smrt.smartdiagnostics.Services;
 
 import org.springframework.stereotype.Service;
 

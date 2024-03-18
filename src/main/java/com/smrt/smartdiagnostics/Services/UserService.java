@@ -1,7 +1,7 @@
-package com.***REMOVED***.smartdiagnostics.Services;
+package com.smrt.smartdiagnostics.Services;
 
-import com.***REMOVED***.smartdiagnostics.Repositories.UserRepository;
-import com.***REMOVED***.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Repositories.UserRepository;
+import com.smrt.smartdiagnostics.Models.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +33,9 @@ public class UserService {
 
     public Optional<User> getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
+    }
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
     }
 
     public void updateUser(User user) {

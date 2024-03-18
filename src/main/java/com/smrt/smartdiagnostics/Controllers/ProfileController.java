@@ -1,12 +1,12 @@
-package com.***REMOVED***.smartdiagnostics.Controllers;
+package com.smrt.smartdiagnostics.Controllers;
 
-import com.***REMOVED***.smartdiagnostics.Services.UserService;
+import com.smrt.smartdiagnostics.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/***REMOVED***/profile")
+@RequestMapping("/smrt/profile")
 public class ProfileController {
     private long userId = -1;
     private final UserService userService;
