@@ -35,6 +35,7 @@ public class UserService {
         return userRepository.getUserByEmail(email);
     }
 
+    @Transactional
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
@@ -48,4 +49,39 @@ public class UserService {
             return result.isPresent() ? result.get() : null;
         }
     }
+
+    @Transactional
+    public void deleteUser(long userId) {
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
+        }
+    }
+
+    @Transactional
+    public void updateCredentials(long userId, User newInfo) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = optionalUser.orElseThrow(() -> new IllegalStateException("No such user found."));
+
+        if (newInfo.getEmail() != null && !newInfo.getEmail().isEmpty()) {
+            user.setEmail(newInfo.getEmail().trim());
+        }
+        if (newInfo.getPassword() != null && !newInfo.getPassword().isEmpty()) {
+            user.setPassword(newInfo.getPassword().trim());
+        }
+        if (newInfo.getUsername() != null && !newInfo.getUsername().isEmpty()) {
+            user.setUsername(newInfo.getUsername().trim());
+        }
+        if (newInfo.getName() != null && !newInfo.getName().isEmpty()) {
+            user.setName(newInfo.getName().trim());
+        }
+        if (newInfo.getSurname() != null && !newInfo.getSurname().isEmpty()) {
+            user.setSurname(newInfo.getSurname().trim());
+        }
+        if (newInfo.getCar() != null && !newInfo.getCar().isEmpty()) {
+            user.setCar(newInfo.getCar().trim());
+        }
+
+        userRepository.saveAndFlush(user);
+    }
+
 }

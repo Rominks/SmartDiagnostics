@@ -38,7 +38,7 @@ public class RegisterController {
         } catch (IllegalStateException e) {
             int responseStatus = 406;
             e.printStackTrace();
-            return new ResponseEntity<>(new IllegalStateException("Account registration failed. Either the email or password is in use."), HttpStatus.valueOf(responseStatus));
+            return new ResponseEntity<>("Account registration failed. Either the email or password is in use.", HttpStatus.valueOf(responseStatus));
         }
     }
 
