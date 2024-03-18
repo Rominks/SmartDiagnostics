@@ -1,8 +1,8 @@
-package com.***REMOVED***.smartdiagnostics.Services;
+package com.smrt.smartdiagnostics.Services;
 
-import com.***REMOVED***.smartdiagnostics.Models.User;
-import com.***REMOVED***.smartdiagnostics.Models.Verification;
-import com.***REMOVED***.smartdiagnostics.Repositories.VerificationRepository;
+import com.smrt.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Models.Verification;
+import com.smrt.smartdiagnostics.Repositories.VerificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

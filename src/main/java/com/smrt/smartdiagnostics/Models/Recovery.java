@@ -9,12 +9,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "unverified_users")
+@Table(name = "Password_recovery")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Verification {
+public class Recovery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -22,11 +22,11 @@ public class Verification {
     private String email;
     @Column(unique = true)
     private String code;
-    private LocalDateTime registrationDate;
+    private LocalDateTime requestCreated;
 
-    public Verification(String email, String code, LocalDateTime now) {
+    public Recovery(String email, String code, LocalDateTime now) {
         this.email = email;
         this.code = code;
-        this.registrationDate = now;
+        this.requestCreated = now;
     }
 }
