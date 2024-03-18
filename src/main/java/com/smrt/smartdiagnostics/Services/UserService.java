@@ -38,4 +38,14 @@ public class UserService {
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
+    public User getUserByCredentials(User user) {
+        Optional<User> result;
+        if (user.getUsername() != null) {
+            result = userRepository.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
+            return result.isPresent() ? result.get() : null;
+        } else {
+            result = userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
+            return result.isPresent() ? result.get() : null;
+        }
+    }
 }
