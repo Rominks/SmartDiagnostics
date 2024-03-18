@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
+
 @RestController
 @RequestMapping("/***REMOVED***/login")
 public class LoginController {
@@ -29,6 +31,9 @@ public class LoginController {
             int responseStatus = 406;
             e.printStackTrace();
             return new ResponseEntity<>(e, HttpStatus.valueOf(responseStatus));
+        } catch (org.hibernate.exception.JDBCConnectionException jdbc) {
+            jdbc.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
