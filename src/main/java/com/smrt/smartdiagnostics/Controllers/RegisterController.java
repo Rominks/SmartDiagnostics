@@ -57,13 +57,11 @@ public class RegisterController {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         String code = generateCode(user);
         String mailText = "Greetings. To verify your account, please visit the link below: \n";
-
-        mailText += "http://***REMOVED***:8080/register/verify/" + code;
+        mailText += "http://***REMOVED***:80/***REMOVED***/register/verify/?code=" + code;
         mailMessage.setFrom("***REMOVED***diag@outlook.com");
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Verify your account");
         mailMessage.setText(mailText);
-
         mailSender.send(mailMessage);
     }
 
