@@ -26,11 +26,15 @@ public class LoginController {
     public ResponseEntity submitLogin(@RequestBody User user) {
         try {
             user = userService.getUserByCredentials(user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                throw new IllegalStateException("No such user found.");
+            }
         } catch (IllegalStateException e) {
             int responseStatus = 406;
             e.printStackTrace();
-            return new ResponseEntity<>(e, HttpStatus.valueOf(responseStatus));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.valueOf(responseStatus));
         } catch (org.hibernate.exception.JDBCConnectionException jdbc) {
             jdbc.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
