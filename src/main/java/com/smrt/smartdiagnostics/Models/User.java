@@ -28,4 +28,5 @@ public class User implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private boolean isVerified;
     private String car;
+    private String threadId;
 }
