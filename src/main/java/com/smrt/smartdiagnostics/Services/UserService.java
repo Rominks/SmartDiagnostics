@@ -1,5 +1,6 @@
 package com.***REMOVED***.smartdiagnostics.Services;
 
+import com.***REMOVED***.smartdiagnostics.Helpers.ValidationHelper;
 import com.***REMOVED***.smartdiagnostics.Repositories.UserRepository;
 import com.***REMOVED***.smartdiagnostics.Models.User;
 import jakarta.transaction.Transactional;
@@ -59,11 +60,16 @@ public class UserService {
 
     @Transactional
     public void updateCredentials(long userId, User newInfo) {
+        // regex :)
+        String pattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         Optional<User> optionalUser = userRepository.findById(userId);
         User user = optionalUser.orElseThrow(() -> new IllegalStateException("No such user found."));
 
         if (newInfo.getEmail() != null && !newInfo.getEmail().isEmpty()) {
-            user.setEmail(newInfo.getEmail().trim());
+            if (ValidationHelper.patternMatches(newInfo.getEmail(), pattern)) {
+                user.setEmail(newInfo.getEmail().trim());
+            }
         }
         if (newInfo.getPassword() != null && !newInfo.getPassword().isEmpty()) {
             user.setPassword(newInfo.getPassword().trim());
@@ -83,5 +89,4 @@ public class UserService {
 
         userRepository.saveAndFlush(user);
     }
-
 }
