@@ -89,6 +89,9 @@ public class UserService {
         if (newInfo.getCar() != null && !newInfo.getCar().isEmpty()) {
             user.setCar(newInfo.getCar().trim());
         }
+        if(newInfo.getThreadId() != null && !newInfo.getThreadId().isEmpty()) {
+            user.setThreadId(newInfo.getThreadId().trim());
+        }
 
         userRepository.saveAndFlush(user);
     }

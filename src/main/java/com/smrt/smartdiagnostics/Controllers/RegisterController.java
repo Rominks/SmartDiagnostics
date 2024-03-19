@@ -6,6 +6,7 @@ import com.***REMOVED***.smartdiagnostics.Models.User;
 import com.***REMOVED***.smartdiagnostics.Services.VerificationService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -52,12 +53,13 @@ public class RegisterController {
             userService.updateUser(user.get());
         }
     }
-
+    @Value("${BASE_IP}")
+    private String BASE_IP;
     private void sendVerification(User user) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         String code = generateCode(user);
         String mailText = "Greetings. To verify your account, please visit the link below: \n";
-        mailText += "http://***REMOVED***:80/***REMOVED***/register/verify/?code=" + code;
+        mailText += "http://"+BASE_IP+"/***REMOVED***/register/verify/?code=" + code;
         mailMessage.setFrom("***REMOVED***diag@outlook.com");
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Verify your account");
