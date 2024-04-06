@@ -23,10 +23,11 @@ public class RecoveryService {
         this.userService = userService;
     }
 
-    public void saveVerification(Recovery verification) {
+    public String saveVerification(Recovery verification) {
         if (!recoveryRepository.existsByEmail(verification.getEmail())) {
             if (!recoveryRepository.existsByCode(verification.getCode())) {
                 recoveryRepository.save(verification);
+                return "Verification saved";
             } else {
                 throw new IllegalStateException("Recovery code already exists");
             }
@@ -35,9 +36,10 @@ public class RecoveryService {
         }
     }
 
-    public void confirmVerification(String code) {
+    public  String confirmVerification(String code) {
         Recovery recovery = recoveryRepository.getVerificationByCode(code);
         recoveryRepository.delete(recovery);
+        return "deleted";
     }
 
     public String getEmailByCode(String code) {
