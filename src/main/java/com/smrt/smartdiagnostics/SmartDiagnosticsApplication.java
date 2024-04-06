@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics;
+package com.smrt.smartdiagnostics;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

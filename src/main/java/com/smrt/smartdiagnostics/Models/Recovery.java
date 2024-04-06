@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.Models;
+package com.smrt.smartdiagnostics.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

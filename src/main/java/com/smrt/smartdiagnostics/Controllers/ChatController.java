@@ -1,8 +1,8 @@
-package com.***REMOVED***.smartdiagnostics.Controllers;
+package com.smrt.smartdiagnostics.Controllers;
 
-import com.***REMOVED***.smartdiagnostics.Services.ChatService;
-import com.***REMOVED***.smartdiagnostics.dto.CreateAssistantRequest;
-import com.***REMOVED***.smartdiagnostics.dto.SendMessageRequest;
+import com.smrt.smartdiagnostics.Services.ChatService;
+import com.smrt.smartdiagnostics.dto.CreateAssistantRequest;
+import com.smrt.smartdiagnostics.dto.SendMessageRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("***REMOVED***/chat")
+@RequestMapping("/smrt/chat")
 @Slf4j
 public class ChatController {
 

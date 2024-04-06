@@ -1,8 +1,8 @@
-package com.***REMOVED***.smartdiagnostics.Services;
+package com.smrt.smartdiagnostics.Services;
 
-import com.***REMOVED***.smartdiagnostics.Models.Recovery;
-import com.***REMOVED***.smartdiagnostics.Models.User;
-import com.***REMOVED***.smartdiagnostics.Repositories.RecoveryRepository;
+import com.smrt.smartdiagnostics.Models.Recovery;
+import com.smrt.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Repositories.RecoveryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;

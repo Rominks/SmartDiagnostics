@@ -8,7 +8,7 @@
 		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.***REMOVED***</groupId>
+	<groupId>com.smrt</groupId>
 	<artifactId>SmartDiagnostics</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SmartDiagnostics</name>
@@ -73,7 +73,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-***REMOVED***-test</artifactId>
+			<artifactId>spring-rabbit-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

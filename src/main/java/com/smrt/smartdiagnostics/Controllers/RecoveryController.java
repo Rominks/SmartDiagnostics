@@ -1,12 +1,13 @@
-package com.***REMOVED***.smartdiagnostics.Controllers;
+package com.smrt.smartdiagnostics.Controllers;
 
-import com.***REMOVED***.smartdiagnostics.Models.Recovery;
-import com.***REMOVED***.smartdiagnostics.Models.User;
-import com.***REMOVED***.smartdiagnostics.Models.Verification;
-import com.***REMOVED***.smartdiagnostics.Services.RecoveryService;
-import com.***REMOVED***.smartdiagnostics.Services.UserService;
-import com.***REMOVED***.smartdiagnostics.Services.VerificationService;
+import com.smrt.smartdiagnostics.Models.Recovery;
+import com.smrt.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Models.Verification;
+import com.smrt.smartdiagnostics.Services.RecoveryService;
+import com.smrt.smartdiagnostics.Services.UserService;
+import com.smrt.smartdiagnostics.Services.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +18,13 @@ import java.util.Random;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 @RestController
-@RequestMapping("/***REMOVED***/recovery")
+@RequestMapping("/smrt/recovery")
 public class RecoveryController {
 
+    @Value("${SMTP_USER}")
     private String email = null;
+    @Value("${BASE_IP}")
+    private String BASE_IP;
     private final UserService userService;
     private final JavaMailSender mailSender;
     private final RecoveryService recoveryService;
@@ -51,8 +55,8 @@ public class RecoveryController {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             String code=generatePasswordCode(user.get());
             String mailText = "Greetings. \n to reset your password, please visit the link below: \n";
-            mailText += "http://***REMOVED***:80/***REMOVED***/recovery/?code="+code;
-            mailMessage.setFrom("***REMOVED***diag@outlook.com");
+            mailText += "http://" + BASE_IP + ":80/smrt/recovery/?code="+code;
+            mailMessage.setFrom(email);
             mailMessage.setTo(user.get().getEmail());
             mailMessage.setSubject("Password reset");
             mailMessage.setText(mailText);

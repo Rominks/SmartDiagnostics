@@ -1,8 +1,8 @@
-package com.***REMOVED***.smartdiagnostics.Services;
+package com.smrt.smartdiagnostics.Services;
 
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
-import com.***REMOVED***.smartdiagnostics.dto.*;
+import com.smrt.smartdiagnostics.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -24,16 +24,16 @@ import java.util.Map;
 public class ChatService {
 
 
-    @Value("${***REMOVED***.key}")
+    @Value("${smrt.key}")
     private String CHATGPT_KEY;
 
-    @Value("${***REMOVED***.model}")
+    @Value("${smrt.model}")
     private String GPT_MODEL;
 
-    @Value("${***REMOVED***.assistants}")
+    @Value("${smrt.assistants}")
     private String CHATGPT_ASSISTANTS_URL;
 
-    @Value("${***REMOVED***.threads}")
+    @Value("${smrt.threads}")
     private String CHATGPT_THREADS_URL;
 
 
