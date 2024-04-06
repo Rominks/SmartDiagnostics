@@ -6,6 +6,7 @@ import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Services.VerificationService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,7 +39,7 @@ public class RegisterController {
         } catch (IllegalStateException e) {
             int responseStatus = 406;
             e.printStackTrace();
-            return new ResponseEntity<>(new IllegalStateException("Account registration failed. Either the email or password is in use."), HttpStatus.valueOf(responseStatus));
+            return new ResponseEntity<>("Account registration failed. Either the email or password is in use.", HttpStatus.valueOf(responseStatus));
         }
     }
 
@@ -52,13 +53,17 @@ public class RegisterController {
             userService.updateUser(user.get());
         }
     }
+    @Value("${BASE_IP}")
+    private String BASE_IP;
 
+    @Value("${SMTP_USER}")
+    private String email;
     private void sendVerification(User user) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         String code = generateCode(user);
         String mailText = "Greetings. To verify your account, please visit the link below: \n";
-        mailText += "http://localhost:80/smrt/register/verify/?code=" + code;
-        mailMessage.setFrom("smrtdiag@outlook.com");
+        mailText += "http://"+BASE_IP+"/smrt/register/verify/?code=" + code;
+        mailMessage.setFrom(email);
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Verify your account");
         mailMessage.setText(mailText);

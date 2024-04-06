@@ -7,6 +7,7 @@ import com.smrt.smartdiagnostics.Services.RecoveryService;
 import com.smrt.smartdiagnostics.Services.UserService;
 import com.smrt.smartdiagnostics.Services.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 @RequestMapping("/smrt/recovery")
 public class RecoveryController {
 
+    @Value("${SMTP_USER}")
     private String email = null;
+    @Value("${BASE_IP}")
+    private String BASE_IP;
     private final UserService userService;
     private final JavaMailSender mailSender;
     private final RecoveryService recoveryService;
@@ -51,8 +55,8 @@ public class RecoveryController {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             String code=generatePasswordCode(user.get());
             String mailText = "Greetings. \n to reset your password, please visit the link below: \n";
-            mailText += "http://localhost:80/smrt/recovery/?code="+code;
-            mailMessage.setFrom("smrtdiag@outlook.com");
+            mailText += "http://" + BASE_IP + ":80/smrt/recovery/?code="+code;
+            mailMessage.setFrom(email);
             mailMessage.setTo(user.get().getEmail());
             mailMessage.setSubject("Password reset");
             mailMessage.setText(mailText);

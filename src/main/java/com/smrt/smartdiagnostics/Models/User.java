@@ -27,4 +27,6 @@ public class User implements Serializable {
     private String password;
     @Column(columnDefinition = "boolean default false")
     private boolean isVerified;
+    private String car;
+    private String threadId;
 }
