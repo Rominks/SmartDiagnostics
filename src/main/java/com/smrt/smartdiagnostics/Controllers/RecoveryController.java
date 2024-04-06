@@ -6,8 +6,11 @@ import com.smrt.smartdiagnostics.Models.Verification;
 import com.smrt.smartdiagnostics.Services.RecoveryService;
 import com.smrt.smartdiagnostics.Services.UserService;
 import com.smrt.smartdiagnostics.Services.VerificationService;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +40,7 @@ public class RecoveryController {
     }
 
     @PostMapping("/reset/{identity}")
-    public void resetPassword(@PathVariable("identity") String identity) {
+    public ResponseEntity resetPassword(@PathVariable("identity") String identity) {
         System.out.println(identity);//do stuff
         Optional<User> user = null;
         if(userService.getUserByEmail(identity).isEmpty()) {
@@ -53,7 +56,8 @@ public class RecoveryController {
 
         if (user !=null) {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            String code=generatePasswordCode(user.get());
+            String code=generatePasswordCode();
+            recoveryService.saveVerification(new Recovery(user.get().getEmail(), code, LocalDateTime.now()));
             String mailText = "Greetings. \n to reset your password, please visit the link below: \n";
             mailText += "http://" + BASE_IP + ":80/smrt/recovery/?code="+code;
             mailMessage.setFrom(email);
@@ -63,13 +67,15 @@ public class RecoveryController {
 
             mailSender.send(mailMessage);
             System.out.println("Siunciam laiska");
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }else {
             System.out.println("Nera tokio userio");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-    private String generatePasswordCode(User user) {
+    public static String generatePasswordCode() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 25;
@@ -80,22 +86,24 @@ public class RecoveryController {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-
-
-        recoveryService.saveVerification(new Recovery(user.getEmail(), generatedString, LocalDateTime.now()));
         return generatedString;
     }
 
 
 
+
     @PostMapping("/changepassword/{code}")
-    public void resetPassword(@PathVariable("code") String code, @RequestBody String password) {
+    public ResponseEntity resetPassword(@PathVariable("code") String code, @RequestBody String password) {
         String email = recoveryService.getEmailByCode(code);
         recoveryService.confirmVerification(code);
         Optional<User> user = userService.getUserByEmail(email);
         if (user.isPresent()) {
             user.get().setPassword(password);
             userService.updateUser(user.get());
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     //create get request that would get username by code
