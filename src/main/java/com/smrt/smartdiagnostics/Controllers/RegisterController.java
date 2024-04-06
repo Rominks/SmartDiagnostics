@@ -1,9 +1,9 @@
-package com.***REMOVED***.smartdiagnostics.Controllers;
+package com.smrt.smartdiagnostics.Controllers;
 
-import com.***REMOVED***.smartdiagnostics.Models.Verification;
-import com.***REMOVED***.smartdiagnostics.Services.UserService;
-import com.***REMOVED***.smartdiagnostics.Models.User;
-import com.***REMOVED***.smartdiagnostics.Services.VerificationService;
+import com.smrt.smartdiagnostics.Models.Verification;
+import com.smrt.smartdiagnostics.Services.UserService;
+import com.smrt.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Services.VerificationService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/***REMOVED***/register")
+@RequestMapping("/smrt/register")
 public class RegisterController {
     private final UserService userService;
     private final VerificationService verificationService;
@@ -55,12 +55,15 @@ public class RegisterController {
     }
     @Value("${BASE_IP}")
     private String BASE_IP;
+
+    @Value("${SMTP_USER}")
+    private String email;
     private void sendVerification(User user) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         String code = generateCode(user);
         String mailText = "Greetings. To verify your account, please visit the link below: \n";
-        mailText += "http://"+BASE_IP+"/***REMOVED***/register/verify/?code=" + code;
-        mailMessage.setFrom("***REMOVED***diag@outlook.com");
+        mailText += "http://"+BASE_IP+"/smrt/register/verify/?code=" + code;
+        mailMessage.setFrom(email);
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Verify your account");
         mailMessage.setText(mailText);
