@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.Helpers;
+package com.smrt.smartdiagnostics.Helpers;
 
 import java.util.regex.Pattern;
 

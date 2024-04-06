@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.dto;
+package com.smrt.smartdiagnostics.dto;
 
 import lombok.Data;
 

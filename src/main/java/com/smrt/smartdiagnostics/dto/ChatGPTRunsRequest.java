@@ -1,4 +1,4 @@
-package com.***REMOVED***.smartdiagnostics.dto;
+package com.smrt.smartdiagnostics.dto;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

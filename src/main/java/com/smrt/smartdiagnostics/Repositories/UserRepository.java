@@ -1,6 +1,6 @@
-package com.***REMOVED***.smartdiagnostics.Repositories;
+package com.smrt.smartdiagnostics.Repositories;
 
-import com.***REMOVED***.smartdiagnostics.Models.User;
+import com.smrt.smartdiagnostics.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
