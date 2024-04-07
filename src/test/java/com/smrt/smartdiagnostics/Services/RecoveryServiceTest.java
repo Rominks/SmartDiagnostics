@@ -67,8 +67,13 @@ public class RecoveryServiceTest {
 
     @Test
     public void confirmVerification() {
+        //kaip vartotojoas noreciau patvirtinti savo paskyra
+        //duota: vartotojas uzsiregistraves sistemoje bet dar nera patvirtines savo paskyros
         Recovery verification = new Recovery("test@test.com", "test", null);
+        //Vartotojas patvirtina savo paskyra paspausdamas ant patvirtinimo mygtuko kuris yra jo el.pasto laiske
         when(recoveryRepository.getVerificationByCode("test")).thenReturn(verification);
+        //Vartotojas paskyra patvirtinta
+        //Patvirtinimo kodas istrinamas is duomenu bazes
         assert recoveryService.confirmVerification("test").equals("deleted");
     }
 
