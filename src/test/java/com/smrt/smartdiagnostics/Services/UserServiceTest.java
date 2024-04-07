@@ -1,4 +1,4 @@
-package com.smrt.smartdiagnostics;
+package com.smrt.smartdiagnostics.Services;
 
 import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Repositories.UserRepository;
