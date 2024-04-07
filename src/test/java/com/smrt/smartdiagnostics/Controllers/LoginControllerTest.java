@@ -1,4 +1,4 @@
-package com.smrt.smartdiagnostics;
+package com.smrt.smartdiagnostics.Controllers;
 
 import com.smrt.smartdiagnostics.Controllers.LoginController;
 import com.smrt.smartdiagnostics.Models.User;
@@ -34,8 +34,10 @@ public class LoginControllerTest {
         user.setPassword("test");
         user.setUsername("username");
 
-        // When
+        // And
         when(userService.getUserByCredentials(user)).thenReturn(user);
+
+        // When
         ResponseEntity response = loginController.submitLogin(user);
 
         // Then
