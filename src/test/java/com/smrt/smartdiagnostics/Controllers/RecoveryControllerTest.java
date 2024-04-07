@@ -6,6 +6,7 @@ import com.smrt.smartdiagnostics.Services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class RecoveryControllerTest {
     private JavaMailSender mailSender;
     private RegisterController registerController;
     RecoveryController recoveryController;
+
     @Before
     public void setUp() throws Exception {
         userService = mock(UserService.class);
@@ -39,6 +41,7 @@ public class RecoveryControllerTest {
         assert (recoveryController.resetPassword("test@test.com").getStatusCode() == HttpStatus.OK);
 
     }
+
     @Test
     public void resetPasswordFailed() {
         User user = new User();
@@ -57,7 +60,7 @@ public class RecoveryControllerTest {
         String code = "test";
         when(recoveryService.getEmailByCode(code)).thenReturn("test@test.com");
         when(userService.getUserByEmail("test@test.com")).thenReturn(Optional.of(new User()));
-        assert (recoveryController.resetPassword(code,"newPass").getStatusCode() == HttpStatus.OK);
+        assert (recoveryController.resetPassword(code, "newPass").getStatusCode() == HttpStatus.OK);
     }
 
     @Test
@@ -71,4 +74,19 @@ public class RecoveryControllerTest {
         when(userService.getUserByEmail("test@test.com")).thenReturn(Optional.of(user));
         assert (recoveryController.getUsernameByCode(code) == "test@test.com");
     }
+
+    //bdd test
+    @Test
+    public void testResetPasswordBDD() {
+
+        //Vartotojas yra registruotas ir turi galiojanti koda
+        String code = "galiojantis kodas";
+        when(recoveryService.getEmailByCode(code)).thenReturn("test@test.com");//grazinamas email pagal koda kuris galioja
+        when(userService.getUserByEmail("test@test.com")).thenReturn(Optional.of(new User()));//grazinamas vartotojas pagal email
+        //when
+        HttpStatusCode status = recoveryController.resetPassword(code, "newPass").getStatusCode();//Vykdomas password resert funkcionalumas
+        //then
+        assert (status == HttpStatus.OK);//patikrinama ar grazintas statusas yra OK
+    }
+
 }
