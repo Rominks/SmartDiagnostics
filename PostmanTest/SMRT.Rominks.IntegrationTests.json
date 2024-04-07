@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "5c2c5fde-9eac-427a-bdf9-9e4af80d23fe",
+		"name": "SMRT.Rominks.IntegrationTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31490444"
+	},
+	"item": [
+		{
+			"name": "/smrt/login/confirm",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var baseIP = pm.environment.get(\"BASE_IP\");\r",
+							"pm.request.url.host = baseIP;"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// POST /smrt/profile/update/{user}\r",
+							"pm.test(\"Profile Update Successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    let body = pm.response.json();\r",
+							"    pm.variables.set(\"USER\", body.userId);\r",
+							"});\r",
+							"\r",
+							"// Error Case: User Not Found (406)\r",
+							"pm.test(\"User Not Found during Profile Update\", function () {\r",
+							"    if (pm.response.code !== 406) {\r",
+							"        pm.test.skip(\"Skipping test because the response code is not 406.\");\r",
+							"        return;\r",
+							"    } else {\r",
+							"        pm.response.to.have.status(406);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Error Case: Internal Server Error (500)\r",
+							"pm.test(\"Internal Server Error during Profile Update\", function () {\r",
+							"    if (pm.response.code !== 500) {\r",
+							"        pm.test.skip(\"Skipping test because the response code is not 500.\");\r",
+							"        return;\r",
+							"    } else {\r",
+							"        pm.response.to.have.status(500);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"smrtdiag@gmail.com\",\r\n    \"password\":\"examplePassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_IP}}:8080/smrt/login/confirm",
+					"protocol": "http",
+					"host": [
+						"{{BASE_IP}}"
+					],
+					"port": "8080",
+					"path": [
+						"smrt",
+						"login",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/smrt/profile/update",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var baseIP = pm.environment.get(\"BASE_IP\");\r",
+							"pm.request.url.host = baseIP;"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// POST /smrt/profile/update/{user}\r",
+							"pm.test(\"Profile Update Successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Error Case: User Not Found (404)\r",
+							"pm.test(\"User Not Found during Profile Update\", function () {\r",
+							"    if (pm.response.code !== 404) {\r",
+							"        pm.test.skip(\"Skipping test because the response code is not 404.\");\r",
+							"        return;\r",
+							"    } else {\r",
+							"        pm.response.to.have.status(404);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Error Case: Internal Server Error (500)\r",
+							"pm.test(\"Internal Server Error during Profile Update\", function () {\r",
+							"    if (pm.response.code !== 500) {\r",
+							"        pm.test.skip(\"Skipping test because the response code is not 500.\");\r",
+							"        return;\r",
+							"    } else {\r",
+							"        pm.response.to.have.status(500);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"John\",\r\n    \"surname\":\"Doe\",\r\n    \"password\":\"asd\",\r\n    \"username\":\"JohnDoe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{BASE_IP}}:8080/smrt/profile/update/{{USER}}",
+					"protocol": "http",
+					"host": [
+						"{{BASE_IP}}"
+					],
+					"port": "8080",
+					"path": [
+						"smrt",
+						"profile",
+						"update",
+						"{{USER}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
