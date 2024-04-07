@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "3c5ddb54-ab2d-4d2c-9198-4b4ce2f1c230",
+		"name": "Integration test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33162619"
+	},
+	"item": [
+		{
+			"name": "Register a new user and request password reset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var request = {\r",
+							"    url: \"http://localhost:8080/smrt/recovery/reset/your@email.com\",\r",
+							"\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json',\r",
+							"    },\r",
+							"    body: {\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"// Send the request\r",
+							"pm.test(\"Request password reset\"), function(){\r",
+							"pm.sendRequest(request, function (err, response) {\r",
+							"    console.log(response.json());\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"})\r",
+							"};\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"\r",
+							"        pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"your@email.com\",\r\n    \"password\":\"test1\",\r\n    \"username\":\"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/smrt/register/confirm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"smrt",
+						"register",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
