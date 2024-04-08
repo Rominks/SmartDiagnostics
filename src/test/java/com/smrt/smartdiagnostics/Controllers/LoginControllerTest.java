@@ -3,6 +3,7 @@ package com.smrt.smartdiagnostics.Controllers;
 import com.smrt.smartdiagnostics.Controllers.LoginController;
 import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Services.UserService;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.hibernate.exception.JDBCConnectionException;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -35,7 +37,7 @@ public class LoginControllerTest {
         user.setUsername("username");
 
         // And
-        when(userService.getUserByCredentials(user)).thenReturn(user);
+        when(userService.getUserByCredentials(user)).thenReturn(Optional.of(user));
 
         // When
         ResponseEntity response = loginController.submitLogin(user);
