@@ -27,14 +27,6 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-
-@RunWith(Cucumber.class)
-@SpringBootTest(classes = SmartDiagnosticsApplication.class)
-@CucumberOptions(
-        features = "src/main/resources",
-        glue = {"com.smrt.smartdiagnostics.Steps"} // Add the package of your glue class here
-)
-
 public class VerifySteps {
     private UserService userService;
     private VerificationService verificationService;
