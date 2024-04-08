@@ -1,4 +1,4 @@
-package com.smrt.smartdiagnostics;
+package com.smrt.smartdiagnostics.Controllers;
 
 import com.smrt.smartdiagnostics.Controllers.RegisterController;
 import com.smrt.smartdiagnostics.Models.User;
