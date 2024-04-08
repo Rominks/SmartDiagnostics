@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/smrt/login")
@@ -25,8 +26,9 @@ public class LoginController {
     @PostMapping("/confirm")
     public ResponseEntity submitLogin(@RequestBody User user) {
         try {
-            if (userService.getUserByCredentials(user).isPresent()) {
-                user = userService.getUserByCredentials(user).get();
+            Optional<User> optional = userService.getUserByCredentials(user);
+            if (optional.isPresent()) {
+                user = optional.get();
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } else {
                 throw new IllegalStateException("No such user found.");
