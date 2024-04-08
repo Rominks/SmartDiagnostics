@@ -22,11 +22,7 @@ public class UserService {
     public void createUser(User user) {
         // Grožis
         if (!userRepository.existsUserByEmail(user.getEmail())) {
-            if (!userRepository.existsUserByPassword(user.getPassword())) {
-                userRepository.save(user);
-            } else {
-                throw new IllegalStateException("An account exists with the provided password. :)");
-            }
+            userRepository.save(user);
         } else {
             throw new IllegalStateException("An account exists with the provided email.");
         }
@@ -43,17 +39,17 @@ public class UserService {
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
-    public User getUserByCredentials(User user) {
+
+    public Optional<User> getUserByCredentials(User user) {
         Optional<User> result;
         if (user.getUsername() != null) {
             result = userRepository.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
-            return result.isPresent() ? result.get() : null;
+            return result.isPresent() ? result : null;
         } else {
             result = userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
-            return result.isPresent() ? result.get() : null;
+            return result.isPresent() ? result : null;
         }
     }
-
     @Transactional
     public void deleteUser(long userId) {
         if (userRepository.findById(userId).isPresent()) {

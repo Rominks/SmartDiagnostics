@@ -25,8 +25,8 @@ public class LoginController {
     @PostMapping("/confirm")
     public ResponseEntity submitLogin(@RequestBody User user) {
         try {
-            user = userService.getUserByCredentials(user);
-            if (user != null) {
+            if (userService.getUserByCredentials(user).isPresent()) {
+                user = userService.getUserByCredentials(user).get();
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } else {
                 throw new IllegalStateException("No such user found.");
