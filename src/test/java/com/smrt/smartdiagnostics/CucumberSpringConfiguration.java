@@ -1,4 +1,4 @@
-package com.smrt.smartdiagnostics.Configs;
+package com.smrt.smartdiagnostics;
 
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
