@@ -183,7 +183,7 @@ public class UserServiceTest {
 		when(userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword())).thenReturn(optionalUser);
 
 		// When
-		User result = userService.getUserByCredentials(user);
+		Optional<User> result = userService.getUserByCredentials(user);
 
 		// Then
 		assertEquals(user, result);
@@ -201,7 +201,7 @@ public class UserServiceTest {
 		when(userRepository.getUserByEmailAndPassword(user.getEmail(), user.getPassword())).thenReturn(Optional.empty());
 
 		// When
-		User result = userService.getUserByCredentials(user);
+		Optional<User> result = userService.getUserByCredentials(user);
 
 		// Then
 		assertNotEquals(user, result);
