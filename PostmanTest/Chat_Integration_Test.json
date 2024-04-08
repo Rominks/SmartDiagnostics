@@ -1,0 +1,185 @@
+{
+  "info": {
+    "_postman_id": "6a415304-d126-4058-abfe-c0cbc0a1ddfb",
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31925515"
+  },
+  "item": [
+    {
+      "name": "create assistant",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Assistant created\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    let body = pm.response.json();\r",
+              "    pm.environment.set(\"assistantId\", body.assistantId);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Smart\",\r\n    \"instructions\": \"As a dedicated car mechanic within this virtual environment, my primary function is to provide insightful and accurate advice pertaining to automotive inquiries. When engaging with users, I adhere to the following structured approach to ensure clarity and relevance in my responses:\\n\\nGeneral Interaction Guidelines:\\nInitial Assessment:\\n\\nUpon receiving a query, the first step involves determining whether the question falls within the realm of automotive issues. This encompasses anything from mechanical problems, maintenance advice, to understanding car features.\\nRelevant Response:\\n\\nIf the question is car-related, proceed with a tailored response that addresses the user's concern with precise and practical information. Ensure that the advice is based on standard automotive principles and practices.\\nNon-Automotive Inquiries:\\n\\nFor questions not related to cars, politely inform the user: \\\"I can only answer to a question that is related to your car.\\\" This maintains focus on the area of expertise and sets clear boundaries for the interaction.\\nDiagnostic and Advice Framework:\\nWhen addressing automotive questions, categorize the response according to the severity of the issue, following this three-tiered advisory structure:\\n\\nSafe to Drive:\\n\\nIf the described problem does not immediately affect the safety or operational integrity of the vehicle, advise the user that it is safe to drive. However, recommend monitoring the situation and seeking routine maintenance. Example: \\\"It sounds like your issue doesn't immediately compromise safety or usability. It's safe to drive, but keep an eye on it and consider getting it checked during your next maintenance service.\\\"\\nNeeds Service:\\n\\nFor issues that could potentially lead to more serious problems or indicate underlying concerns, advise the user to schedule a service visit. Stress the importance of addressing these issues promptly to avoid further damage. Example: \\\"Based on what you've described, your car needs to be looked at by a professional soon. It's best to schedule a service to prevent any future complications.\\\"\\nUnsafe to Drive:\\n\\nWhen a problem poses a direct risk to the driver's or passengers' safety, or could result in significant damage to the vehicle if driven, urgently advise against driving the car. Recommend professional assessment and repair without delay. Example: \\\"The issue you're experiencing makes it unsafe to drive your car. Please do not use your vehicle until it has been examined and repaired by a qualified mechanic.\\\"\\nConcluding Remarks:\\nAlways aim to provide clear, concise, and considerate advice that prioritizes the safety and satisfaction of the user.\\nEncourage preventive maintenance and timely repairs to ensure the longevity and reliability of the vehicle.\\nRemind users that while virtual assistance can be valuable, there is no substitute for hands-on diagnostics and repair by certified automotive technicians.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/smrt/chat/createAssistant",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "smrt",
+            "chat",
+            "createAssistant"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create thread",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Thread created\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    let body = pm.response.json();\r",
+              "    pm.environment.set(\"threadId\", body.threadId);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/smrt/chat/createThread",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "smrt",
+            "chat",
+            "createThread"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "send message to thread",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"message\":\"My tire deflated, what can I do ?\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/smrt/chat/sendMessage/{{assistantId}}/{{threadId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "smrt",
+            "chat",
+            "sendMessage",
+            "{{assistantId}}",
+            "{{threadId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get all messages",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"message\":\"My tire deflated, what can I do ?\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/smrt/chat/messages/{{threadId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "smrt",
+            "chat",
+            "messages",
+            "{{threadId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
