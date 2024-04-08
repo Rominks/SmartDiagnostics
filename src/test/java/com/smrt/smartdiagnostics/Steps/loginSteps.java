@@ -1,5 +1,6 @@
 package com.smrt.smartdiagnostics.Steps;
 
+import com.smrt.smartdiagnostics.Controllers.LoginController;
 import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Services.UserService;
 import io.cucumber.java.en.And;
