@@ -15,7 +15,7 @@ target/
 
 #ENV
 ../env.properties
-
+../test.properties
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -34,3 +34,5 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/env.properties
+src/test/resources/test.properties

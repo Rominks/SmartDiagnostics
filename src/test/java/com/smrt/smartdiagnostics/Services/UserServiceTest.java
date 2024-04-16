@@ -186,7 +186,7 @@ public class UserServiceTest {
 		Optional<User> result = userService.getUserByCredentials(user);
 
 		// Then
-		assertEquals(user, result);
+		assertEquals(user, result.get());
 	}
 
 	@Test
