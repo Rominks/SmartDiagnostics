@@ -21,8 +21,8 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PWRD }}
-          MYSQL_DATABASE: smrt
+          MYSQL_ROOT_PASSWORD: ""
+          MYSQL_DATABASE: root
         ports:   
           - 3306:3306
         options: >-
@@ -41,7 +41,7 @@ jobs:
               
       - name: Connect to MySQL
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root --password=password -e "SHOW DATABASES;"
+          mysql -h 127.0.0.1 -P 3306 -u root --password=password < ${{secrets.DATABASE}}
   build:
 
     runs-on: ubuntu-latest
