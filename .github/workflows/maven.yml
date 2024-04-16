@@ -41,6 +41,14 @@ jobs:
       - name: Connect to MySQL
         run: |
           mysql --host=127.0.0.1 -P 3306 --user=root --password=password
+
+      - name: Create database and user
+        run: |
+          mysql -h 127.0.0.1 -u root --password=password -e "
+            CREATE DATABASE IF NOT EXISTS smrt;
+            CREATE USER 'smrt'@'%' IDENTIFIED BY 'smrt';
+            GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'%';
+            FLUSH PRIVILEGES;"
   build:
 
     runs-on: ubuntu-latest
