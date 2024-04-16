@@ -41,7 +41,7 @@ jobs:
               
       - name: Connect to MySQL
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root --password=password < ${{secrets.DATABASE}}
+          mysql --host=127.0.0.1 -P 3306 --user=root --password="" < ${{secrets.DATABASE}}
   build:
 
     runs-on: ubuntu-latest
