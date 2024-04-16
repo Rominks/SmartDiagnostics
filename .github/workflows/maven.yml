@@ -23,19 +23,19 @@ jobs:
     - uses: actions/checkout@v3
     - name: Setup Environment Variables
       run: |
-        echo "DB_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
-        echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-        echo "DB_PWRD=${{ secrets.DB_PWRD }}" >> $GITHUB_ENV
-        echo "RABBIT_HOST=${{ secrets.RABBIT_HOST }}" >> $GITHUB_ENV
-        echo "RABBIT_USER=${{ secrets.RABBIT_USER }}" >> $GITHUB_ENV
-        echo "RABBIT_PWRD=${{ secrets.RABBIT_PWRD }}" >> $GITHUB_ENV
-        echo "SECURITY_NAME=${{ secrets.SECURITY_NAME }}" >> $GITHUB_ENV
-        echo "SECURITY_PWRD=${{ secrets.SECURITY_PWRD }}" >> $GITHUB_ENV
-        echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> $GITHUB_ENV
-        echo "SMTP_PWRD=${{ secrets.SMTP_PWRD }}" >> $GITHUB_ENV
-        echo "GPT_MODEL=${{ secrets.GPT_MODEL }}" >> $GITHUB_ENV
-        echo "GPT_KEY=${{ secrets.GPT_KEY }}" >> $GITHUB_ENV
-        echo "HOST_IP=${{ secrets.HOST_IP }}" >> $GITHUB_ENV
+        echo "DB_URL=${{ secrets.DB_URL }}" > $GITHUB_ENV
+        echo "DB_USER=${{ secrets.DB_USER }}" > $GITHUB_ENV
+        echo "DB_PWRD=${{ secrets.DB_PWRD }}" > $GITHUB_ENV
+        echo "RABBIT_HOST=${{ secrets.RABBIT_HOST }}" > $GITHUB_ENV
+        echo "RABBIT_USER=${{ secrets.RABBIT_USER }}" > $GITHUB_ENV
+        echo "RABBIT_PWRD=${{ secrets.RABBIT_PWRD }}" > $GITHUB_ENV
+        echo "SECURITY_NAME=${{ secrets.SECURITY_NAME }}" > $GITHUB_ENV
+        echo "SECURITY_PWRD=${{ secrets.SECURITY_PWRD }}" > $GITHUB_ENV
+        echo "SMTP_USER=${{ secrets.SMTP_USER }}" > $GITHUB_ENV
+        echo "SMTP_PWRD=${{ secrets.SMTP_PWRD }}" > $GITHUB_ENV
+        echo "GPT_MODEL=${{ secrets.GPT_MODEL }}" > $GITHUB_ENV
+        echo "GPT_KEY=${{ secrets.GPT_KEY }}" > $GITHUB_ENV
+        echo "HOST_IP=${{ secrets.HOST_IP }}" > $GITHUB_ENV
         env:
           API_KEY: ${{ secrets.API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
