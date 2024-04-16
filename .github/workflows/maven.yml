@@ -15,6 +15,33 @@ on:
     branches: [ "master" ]
 
 jobs:
+  mysql-job:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PWRD }}
+          MYSQL_DATABASE: smrt
+        ports:   
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:      
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+              
+      - name: Install MySQL client
+        run: sudo apt-get install mysql-client
+        
+              
+      - name: Connect to MySQL
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root --password=password -e "SHOW DATABASES;"
   build:
 
     runs-on: ubuntu-latest
