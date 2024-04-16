@@ -21,14 +21,13 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: ""
-          MYSQL_DATABASE: root
+          MYSQL_ROOT_PASSWORD: password
         ports:   
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping"
+          --health-cmd "mysqladmin ping --user=root --password=password --silent"
           --health-interval 10s
-          --health-timeout 5s
+          --health-timeout 10s
           --health-retries 5
     steps:      
       - name: Check out repository
@@ -41,7 +40,7 @@ jobs:
               
       - name: Connect to MySQL
         run: |
-          mysql --host=127.0.0.1 -P 3306 --user=root --password="" < ${{secrets.DATABASE}}
+          mysql --host=127.0.0.1 -P 3306 --user=root --password=password
   build:
 
     runs-on: ubuntu-latest
