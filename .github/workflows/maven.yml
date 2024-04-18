@@ -33,18 +33,16 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-
-    - name: set variables
-      env:
-        DB_URL: ${{secrets.DB_URL}}
-        DB_PORT: ${{secrets.DB_PORT}}
-        DB_USER: ${{secrets.DB_USER}}
-        DB_PWRD: ${{secrets.DB_PWRD}}
     
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
               
     - name: Connect to MySQL
+      env:
+          DB_URL: ${{secrets.DB_URL}}
+          DB_PORT: ${{secrets.DB_PORT}}
+          DB_USER: ${{secrets.DB_USER}}
+          DB_PWRD: ${{secrets.DB_PWRD}}
       run: |
           mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD"
 
