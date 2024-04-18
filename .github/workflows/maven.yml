@@ -46,7 +46,7 @@ jobs:
           GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'localhost';
           FLUSH PRIVILEGES;"
         mysql -h "127.0.0.1" -P "3306" -u "root" --password="root" -e "
-          SELECT user, host FROM mysql.user;
+          SHOW DATABASES;
         "
 
     - name: Setup Environment Variables
