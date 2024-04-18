@@ -47,7 +47,7 @@ jobs:
     - name: Connect to MySQL
       run: |
         sudo systemctl start mysql
-        sudo mysql --host="$DB_URL" --port="$DB_PORT" --user="$MYSQL_USER" --password="$MYSQL_ROOT_PASSWORD"
+        sudo mysql --host="127.0.0.1" --port="3306" --user="$MYSQL_USER" --password="$MYSQL_ROOT_PASSWORD"
 
     - name: Create database and user
       run: |
