@@ -33,17 +33,24 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
+
+    - name: set variables
+      env:
+        DB_URL: ${{secrets.DB_URL}}
+        DB_PORT: ${{secrets.DB_PORT}}
+        DB_USER: ${{secrets.DB_USER}}
+        DB_PWRD: ${{secrets.DB_PWRD}}
     
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
               
     - name: Connect to MySQL
       run: |
-          mysql --host="${{ secrets.DB_URL }}" --port="${{ secrets.DB_PORT }}" --user="${{ secrets.DB_USER }}" --password="${{ secrets.DB_PWRD }}"
+          mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD"
 
     - name: Create database and user
       run: |
-          mysql -h "${{ secrets.DB_URL }}" -P "${{ secrets.DB_PORT }}" -u "${{ secrets.DB_USER }}" --password="${{ secrets.DB_PWRD }}" -e "
+          mysql -h "$DB_URL" -P "$DB_PORT" -u "$DB_USER" --password="$DB_PWRD" -e "
             CREATE DATABASE IF NOT EXISTS smrt;
             CREATE USER 'smrt'@'%' IDENTIFIED BY 'smrt';
             GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'%';
