@@ -15,7 +15,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_USER: root
         options:
-          --health-cmd "mysqladmin ping --user=root --password=password --silent"--health-interval 10s--health-timeout 10s--health-retries 5
+          ---health-cmd "mysqladmin ping --user=root --password=password --silent"--health-interval 10s--health-timeout 10s--health-retries 5
     runs-on: ubuntu-latest
     environment: env
     env:
