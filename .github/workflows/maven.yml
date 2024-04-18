@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: env
     env:
       DB_URL: ${{secrets.DB_URL}}
       DB_PORT: 3306
