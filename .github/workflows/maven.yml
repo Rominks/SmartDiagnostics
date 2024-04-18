@@ -32,17 +32,6 @@ jobs:
 
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
-
-    # - name: Set env as secret
-    #   env:
-    #     MY_VAL: ${{ secrets.SUPER_SECRET }}
-    #   run: |
-    #     import os
-    #     data = open("file", "w")
-    #     for q in (os.getenv("MY_VAL")):
-    #       print(q)
-    #       data.write(q)
-    #   shell: python
     
     - name: Connect to MySQL
       run: |
@@ -51,7 +40,7 @@ jobs:
 
     - name: Create database and user
       run: |
-        mysql -h "$DB_URL" -P "$DB_PORT" -u "$DB_USER" --password="$DB_PWRD" -e "
+        mysql -h "127.0.0.1" -P "3306" -u "root" --password="root" -e "
           CREATE DATABASE IF NOT EXISTS smrt;
           CREATE USER IF NOT EXISTS 'smrt'@'%' IDENTIFIED BY 'smrt';
           GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'%';
