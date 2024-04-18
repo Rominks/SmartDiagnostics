@@ -47,7 +47,9 @@ jobs:
           FLUSH PRIVILEGES;"
 
     - name: Setup Environment Variables
-      run: echo "$PROPERTIES" > src/main/resources/env.properties
+      run: |
+        echo "$PROPERTIES" > src/main/resources/env.properties
+        echo "$PROPERTIES"
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
