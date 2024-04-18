@@ -43,7 +43,7 @@ jobs:
 
     - name: Create database and user
       run: |
-          mysql -h "${{ secrets.DB_URL }}" -u "${{ secrets.DB_USER }}" --password="${{ secrets.DB_PWRD }}" -e "
+          mysql -h "${{ secrets.DB_URL }}" -P "${{ secrets.DB_PORT }}" -u "${{ secrets.DB_USER }}" --password="${{ secrets.DB_PWRD }}" -e "
             CREATE DATABASE IF NOT EXISTS smrt;
             CREATE USER 'smrt'@'%' IDENTIFIED BY 'smrt';
             GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'%';
