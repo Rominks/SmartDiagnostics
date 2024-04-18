@@ -39,7 +39,7 @@ jobs:
     - name: Connect to MySQL
       run: |
           # mysql --host=`${{ secrets.DB_URL }}` --port=`${{ secrets.DB_PORT }}` --user=`${{ secrets.DB_USER }}` --password=`${{ secrets.DB_PWRD }}` `${{ secrets.DB_NAME }}`
-          echo "DB_HOST: ${{ github.env.DB_HOST }}"
+          echo "DB_HOST: ${{ github.env.DB_URL }}"
           echo "DB_PORT: ${{ secrets.DB_PORT }}"
           echo "DB_USER: ${{ secrets.DB_USER }}"
           echo "DB_PASSWORD: ${{ secrets.DB_PASSWORD }}"
