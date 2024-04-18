@@ -36,3 +36,4 @@ build/
 .vscode/
 src/main/resources/env.properties
 src/test/resources/test.properties
+test.properties
