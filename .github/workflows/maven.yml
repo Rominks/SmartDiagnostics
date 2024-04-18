@@ -39,7 +39,7 @@ jobs:
               
     - name: Connect to MySQL
       run: |
-          mysql --host=`${{ secrets.DB_URL }}` --port=`${{ secrets.DB_PORT }}` --user=`${{ secrets.DB_USER }}` --password=`${{ secrets.DB_PWRD }}`
+          mysql --host="${{ secrets.DB_URL }}" --port="${{ secrets.DB_PORT }}" --user="${{ secrets.DB_USER }}" --password="${{ secrets.DB_PWRD }}"
 
     - name: Create database and user
       run: |
