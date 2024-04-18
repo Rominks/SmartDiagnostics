@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DB_URL: ${{ secrets.DB_URL }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PWRD: ${{ secrets.DB_PWRD }}
-      PROPERTIES: ${{ secrets.properties }}
+      DB_URL: ${{secrets.DB_URL}}
+      DB_PORT: 3306
+      DB_USER: ${{secrets.DB_USER}}
+      DB_PWRD: ${{secrets.DB_PWRD}}
+      PROPERTIES: ${{secrets.properties}}
     
     steps:
     - name: Check out repository
