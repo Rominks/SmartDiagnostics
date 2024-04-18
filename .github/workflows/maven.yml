@@ -37,7 +37,7 @@ jobs:
     
     - name: Connect to MySQL
       run: |
-        ping "$DB_URL"
+        curl "$DB_URL" -I
         mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD" --protocol=TCP
 
     - name: Create database and user
