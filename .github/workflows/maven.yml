@@ -45,6 +45,9 @@ jobs:
           CREATE USER IF NOT EXISTS 'smrt'@'localhost' IDENTIFIED BY 'smrt';
           GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'localhost';
           FLUSH PRIVILEGES;"
+        mysql -h "127.0.0.1" -P "3306" -u "root" --password="root" -e "
+          SELECT user, host FROM mysql.user;
+        "
 
     - name: Setup Environment Variables
       run: |
