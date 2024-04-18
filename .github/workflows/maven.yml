@@ -36,11 +36,11 @@ jobs:
 
     - name: My first action
       env:
-          DB_HOST: ${{ secrets.DB_URL }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PWRD: ${{ secrets.DB_PWRD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
+        echo "DB_HOST: ${{ secrets.DB_URL }}"
+        echo "DB_PORT: ${{ secrets.DB_PORT }}"
+        echo "DB_USER: ${{ secrets.DB_USER }}"
+        echo "DB_PASSWORD: ${{ secrets.DB_PASSWORD }}"
+        echo "DB_NAME: ${{ secrets.DB_NAME }}"
       run: |
         echo "DB_HOST"
         echo "DB_PORT"
