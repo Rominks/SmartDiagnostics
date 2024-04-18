@@ -48,7 +48,7 @@ jobs:
         mysql -h "127.0.0.1" -P "3306" -u "root" --password="root" -e "
           SHOW DATABASES;
         "
-        sudo service mysql restart
+        sudo systemctl restart mysql
 
     - name: Setup Environment Variables
       run: |
