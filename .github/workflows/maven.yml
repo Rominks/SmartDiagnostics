@@ -39,6 +39,7 @@ jobs:
     - name: Connect to MySQL
       run: |
         mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$MYSQL_ROOT_PASSWORD"
+        systemctl status mysql
 
     - name: Create database and user
       run: |
