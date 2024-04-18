@@ -8,6 +8,14 @@ on:
 
 jobs:
   build:
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: root
+        options:
+          --health-cmd "mysqladmin ping --user=root --password=password --silent"--health-interval 10s--health-timeout 10s--health-retries 5
     runs-on: ubuntu-latest
     environment: env
     env:
@@ -16,7 +24,7 @@ jobs:
       DB_USER: ${{secrets.DB_USER}}
       DB_PWRD: ${{secrets.DB_PWRD}}
       PROPERTIES: ${{secrets.properties}}
-      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_ROOT_PASSWORD: password
       
     steps:
     - name: Check out repository
@@ -39,7 +47,7 @@ jobs:
     - name: Connect to MySQL
       run: |
         sudo systemctl start mysql
-        mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$MYSQL_ROOT_PASSWORD"
+        mysql --host="$DB_URL" --port="$DB_PORT" --user="$MYSQL_USER" --password="$MYSQL_ROOT_PASSWORD"
 
     - name: Create database and user
       run: |
