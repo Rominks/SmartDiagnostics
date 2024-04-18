@@ -42,8 +42,8 @@ jobs:
       run: |
         mysql -h "127.0.0.1" -P "3306" -u "root" --password="root" -e "
           CREATE DATABASE IF NOT EXISTS smrt;
-          CREATE USER IF NOT EXISTS 'smrt'@'%' IDENTIFIED BY 'smrt';
-          GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'%';
+          CREATE USER IF NOT EXISTS 'smrt'@'localhost' IDENTIFIED BY 'smrt';
+          GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'localhost';
           FLUSH PRIVILEGES;"
 
     - name: Setup Environment Variables
