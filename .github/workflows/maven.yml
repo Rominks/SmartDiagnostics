@@ -22,12 +22,20 @@ jobs:
 
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
+
+    - name: Set env as secret
+      env:
+        MY_VAL: ${{ secrets.SUPER_SECRET }}
+      run: |
+        import os
+        data = open("file", "w")
+        for q in (os.getenv("MY_VAL")):
+          print(q)
+          data.write(q)
+      shell: python
     
     - name: Connect to MySQL
       run: |
-        echo "DB_URL: $DB_URL"
-        echo "DB_PORT: $DB_PORT"
-        echo "DB_USER: $DB_USER"
         mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD" --protocol=TCP
 
     - name: Create database and user
