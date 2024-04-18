@@ -40,11 +40,11 @@ jobs:
               
     - name: Connect to MySQL
       run: |
-          mysql --host=127.0.0.1 -P 3306 --user=root --password=password
+          mysql --host="${{ secrets.DB_URL }}" -P 3306 --user="${{ secrets.DB_USER}}" --password=${{ secrets.DB_PWRD }}
 
     - name: Create database and user
       run: |
-          mysql -h 127.0.0.1 -u root --password=password -e "
+          mysql -h "${{ secrets.DB_URL }}" -u "${{ secrets.DB_USER }}" --password="${{ secrets.DB_PWRD }}" -e "
             CREATE DATABASE IF NOT EXISTS smrt;
             CREATE USER 'smrt'@'%' IDENTIFIED BY 'smrt';
             GRANT ALL PRIVILEGES ON smrt.* TO 'smrt'@'%';
