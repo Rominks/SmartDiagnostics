@@ -25,7 +25,7 @@ jobs:
     
     - name: Connect to MySQL
       run: |
-        mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD" -e "SELECT 1"
+        mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD" --protocol=TCP -e
 
     - name: Create database and user
       run: |
