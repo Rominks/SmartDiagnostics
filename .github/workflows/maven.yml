@@ -12,7 +12,7 @@ jobs:
     environment: env
     env:
       DB_URL: ${{secrets.DB_URL}}
-      DB_PORT: 3306
+      DB_PORT: ${{secrets.DB_PORT}}
       DB_USER: ${{secrets.DB_USER}}
       DB_PWRD: ${{secrets.DB_PWRD}}
       PROPERTIES: ${{secrets.properties}}
@@ -24,19 +24,20 @@ jobs:
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
 
-    - name: Set env as secret
-      env:
-        MY_VAL: ${{ secrets.SUPER_SECRET }}
-      run: |
-        import os
-        data = open("file", "w")
-        for q in (os.getenv("MY_VAL")):
-          print(q)
-          data.write(q)
-      shell: python
+    # - name: Set env as secret
+    #   env:
+    #     MY_VAL: ${{ secrets.SUPER_SECRET }}
+    #   run: |
+    #     import os
+    #     data = open("file", "w")
+    #     for q in (os.getenv("MY_VAL")):
+    #       print(q)
+    #       data.write(q)
+    #   shell: python
     
     - name: Connect to MySQL
       run: |
+        ping "$DB_URL"
         mysql --host="$DB_URL" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PWRD" --protocol=TCP
 
     - name: Create database and user
