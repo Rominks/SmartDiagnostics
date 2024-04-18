@@ -21,7 +21,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: "${{ secrets.DB_PWRD }}"
+          MYSQL_ROOT_PASSWORD: password
         ports:   
           - 3306:3306
         options: >-
