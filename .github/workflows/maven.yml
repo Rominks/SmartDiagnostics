@@ -41,11 +41,11 @@ jobs:
           DB_PWRD: ${{ secrets.DB_PWRD }}
           DB_NAME: ${{ secrets.DB_NAME }}
       run: |
-        echo DB_HOST
-        echo DB_PORT
-        echo DB_USER
-        echo DB_PWRD
-        echo DB_NAME
+        echo "DB_HOST"
+        echo "DB_PORT"
+        echo "DB_USER"
+        echo "DB_PWRD"
+        echo "DB_NAME"
     
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
