@@ -17,30 +17,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: password
-        ports:   
-          - 3306:3306
-        options: >-
-          --health-cmd "mysqladmin ping --user=root --password=password --silent"
-          --health-interval 10s
-          --health-timeout 10s
-          --health-retries 5
+    # services:
+    #   mysql:
+    #     image: mysql:5.7
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: password
+    #     ports:   
+    #       - 3306:3306
+    #     options: >-
+    #       --health-cmd "mysqladmin ping --user=root --password=password --silent"
+    #       --health-interval 10s
+    #       --health-timeout 10s
+    #       --health-retries 5
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-        
     
     - name: Install MySQL client
       run: sudo apt-get install mysql-client
-        
               
     - name: Connect to MySQL
       run: |
-          mysql --host="${{ secrets.DB_URL }}" -P 3306 --user="${{ secrets.DB_USER}}" --password=${{ secrets.DB_PWRD }}
+          mysql --host="${{ secrets.DB_HOST }}" --port="${{ secrets.DB_PORT }}" --user="${{ secrets.DB_USER }}" --password="${{ secrets.DB_PASSWORD }}" "${{ secrets.DB_NAME }}"
 
     - name: Create database and user
       run: |
