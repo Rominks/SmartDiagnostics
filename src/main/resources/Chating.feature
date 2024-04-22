@@ -1,4 +1,4 @@
-Feature: Chating feature
+Feature: Chatting feature
 
   Scenario: Successfully send a message to an existing thread
     Given the service is available

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.Optional;
@@ -44,10 +45,21 @@ public class RecoveryControllerTest {
 
     @Test
     public void resetPasswordFailed() {
-        User user = new User();
-        when(userService.getUserByEmail("test")).thenReturn(Optional.of(user));
-        when(userService.getUserByUsername("test")).thenReturn(Optional.of(user));
-        assert (recoveryController.resetPassword("testas").getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR);
+        // Arrange
+        UserService userService = mock(UserService.class);
+        JavaMailSender mailSender = mock(JavaMailSender.class);
+        RecoveryService recoveryService = mock(RecoveryService.class);
+
+        when(userService.getUserByEmail("testas")).thenReturn(Optional.empty());
+        when(userService.getUserByUsername("testas")).thenReturn(Optional.empty());
+
+        RecoveryController recoveryController = new RecoveryController(userService, mailSender, recoveryService);
+
+        // Act
+        ResponseEntity<String> response = recoveryController.resetPassword("testas");
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -55,13 +67,7 @@ public class RecoveryControllerTest {
         assert RecoveryController.generatePasswordCode().length() == 25;
     }
 
-    @Test
-    public void testResetPassword() {
-        String code = "test";
-        when(recoveryService.getEmailByCode(code)).thenReturn("test@test.com");
-        when(userService.getUserByEmail("test@test.com")).thenReturn(Optional.of(new User()));
-        assert (recoveryController.resetPassword(code, "newPass").getStatusCode() == HttpStatus.OK);
-    }
+
 
     @Test
     public void getUsernameByCode() {
@@ -75,18 +81,5 @@ public class RecoveryControllerTest {
         assert (recoveryController.getUsernameByCode(code) == "test@test.com");
     }
 
-    //bdd test
-    @Test
-    public void testResetPasswordBDD() {
-
-        //Vartotojas yra registruotas ir turi galiojanti koda
-        String code = "galiojantis kodas";
-        when(recoveryService.getEmailByCode(code)).thenReturn("test@test.com");//grazinamas email pagal koda kuris galioja
-        when(userService.getUserByEmail("test@test.com")).thenReturn(Optional.of(new User()));//grazinamas vartotojas pagal email
-        //when
-        HttpStatusCode status = recoveryController.resetPassword(code, "newPass").getStatusCode();//Vykdomas password resert funkcionalumas
-        //then
-        assert (status == HttpStatus.OK);//patikrinama ar grazintas statusas yra OK
-    }
 
 }

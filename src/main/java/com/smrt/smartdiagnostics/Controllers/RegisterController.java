@@ -4,6 +4,7 @@ import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Models.Verification;
 import com.smrt.smartdiagnostics.Services.UserService;
 import com.smrt.smartdiagnostics.Services.VerificationService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
@@ -43,22 +45,24 @@ public class RegisterController {
         }
     }
 
-    @PutMapping("/verify/{code}")
-    public ResponseEntity<String> verifyUser(@PathVariable("code") String code) {
+    @GetMapping("/verify/{code}")
+    public void verifyUser(@PathVariable("code") String code, HttpServletResponse response) throws IOException {
         String email = verificationService.getEmailByCode(code);
         if (email == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.sendRedirect("/verification_failed.html");
+            return;
         }
         verificationService.confirmVerification(code);
         Optional<User> user = userService.getUserByEmail(email);
         if (user.isPresent()) {
             user.get().setVerified(true);
             userService.updateUser(user.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+            response.sendRedirect("/verification_success.html");
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.sendRedirect("/verification_failed.html");
         }
     }
+
 
     @Value("${BASE_IP}")
     private String BASE_IP;
@@ -70,7 +74,7 @@ public class RegisterController {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         String code = generateCode(user);
         String mailText = "Greetings. To verify your account, please visit the link below: \n";
-        mailText += "http://" + BASE_IP + "/smrt/register/verify/?code=" + code;
+        mailText += "http://" + BASE_IP + ":8080/smrt/register/verify/?code=" + code;
         mailMessage.setFrom(email);
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Verify your account");

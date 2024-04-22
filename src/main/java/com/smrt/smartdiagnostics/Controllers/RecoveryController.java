@@ -6,6 +6,7 @@ import com.smrt.smartdiagnostics.Models.Verification;
 import com.smrt.smartdiagnostics.Services.RecoveryService;
 import com.smrt.smartdiagnostics.Services.UserService;
 import com.smrt.smartdiagnostics.Services.VerificationService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
@@ -40,37 +42,25 @@ public class RecoveryController {
     }
 
     @PostMapping("/reset/{identity}")
-    public ResponseEntity resetPassword(@PathVariable("identity") String identity) {
-        System.out.println(identity);//do stuff
-        Optional<User> user = null;
-        if(userService.getUserByEmail(identity).isEmpty()) {
-            System.out.println("Pagal email nera, tikrinam pagal username");
-            if(userService.getUserByUsername(identity).isEmpty()){
-                System.out.println("nera pagal username");
-            }else {
-                user = userService.getUserByUsername(identity);
-            }
-        }else {
-            user = userService.getUserByEmail(identity);
-        }
-
-        if (user !=null) {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            String code=generatePasswordCode();
+    public ResponseEntity<String> resetPassword(@PathVariable("identity") String identity) {
+        System.out.println("Processing reset password for: " + identity);
+        Optional<User> user = userService.getUserByEmail(identity)
+                .or(() -> userService.getUserByUsername(identity));
+        if (user.isPresent()) {
+            String code = generatePasswordCode();
             recoveryService.saveVerification(new Recovery(user.get().getEmail(), code, LocalDateTime.now()));
-            String mailText = "Greetings. \n to reset your password, please visit the link below: \n";
-            mailText += "http://" + BASE_IP + ":80/smrt/recovery/?code="+code;
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(email);
             mailMessage.setTo(user.get().getEmail());
-            mailMessage.setSubject("Password reset");
-            mailMessage.setText(mailText);
+            mailMessage.setSubject("Password Reset Request");
+            String link = "http://" + BASE_IP + ":8080/reset_password.html?code=" + code; // Ensure this path is correct
+            mailMessage.setText("Hello,\n\nTo reset your password, please follow this link:\n" + link);
 
             mailSender.send(mailMessage);
-            System.out.println("Siunciam laiska");
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }else {
-            System.out.println("Nera tokio userio");
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.ok("Reset email sent to " + user.get().getEmail());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such user found.");
         }
     }
 
@@ -90,20 +80,21 @@ public class RecoveryController {
     }
 
 
-
-
-    @PostMapping("/changepassword/{code}")
-    public ResponseEntity resetPassword(@PathVariable("code") String code, @RequestBody String password) {
-        String email = recoveryService.getEmailByCode(code);
-        recoveryService.confirmVerification(code);
-        Optional<User> user = userService.getUserByEmail(email);
-        if (user.isPresent()) {
-            user.get().setPassword(password);
-            userService.updateUser(user.get());
-
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping("/changepassword")
+    public void changePassword(@RequestParam("code") String code, @RequestParam("password") String password, HttpServletResponse response) throws IOException, IOException {
+        try {
+            String email = recoveryService.getEmailByCode(code);
+            Optional<User> user = userService.getUserByEmail(email);
+            if (user.isPresent()) {
+                user.get().setPassword(password); // Make sure to hash this password
+                userService.updateUser(user.get());
+                recoveryService.confirmVerification(code);
+                response.sendRedirect("/password_reset_success.html");
+            } else {
+                response.sendRedirect("/password_reset_failure.html");
+            }
+        } catch (Exception e) {
+            response.sendRedirect("/password_reset_failure.html");
         }
     }
     //create get request that would get username by code

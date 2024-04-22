@@ -33,6 +33,9 @@ public class VerificationService {
 
     public String getEmailByCode(String code) {
         Verification verification = verificationRepository.getVerificationByCode(code);
+        if(verification == null) {
+            return null;
+        }
         return verification.getEmail();
     }
 }

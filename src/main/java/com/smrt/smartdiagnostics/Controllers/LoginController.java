@@ -27,7 +27,7 @@ public class LoginController {
     public ResponseEntity submitLogin(@RequestBody User user) {
         try {
             Optional<User> optional = userService.getUserByCredentials(user);
-            if (optional.isPresent()) {
+            if (optional !=null) {
                 user = optional.get();
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } else {

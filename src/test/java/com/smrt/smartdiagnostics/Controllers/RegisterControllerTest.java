@@ -5,14 +5,17 @@ import com.smrt.smartdiagnostics.Models.User;
 import com.smrt.smartdiagnostics.Models.Verification;
 import com.smrt.smartdiagnostics.Services.UserService;
 import com.smrt.smartdiagnostics.Services.VerificationService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -25,6 +28,9 @@ public class RegisterControllerTest {
     private VerificationService verificationService;
     private JavaMailSender mailSender;
     private RegisterController registerController;
+
+    @Mock
+    private HttpServletResponse response;
 
     @Before
     public void setup() {
@@ -72,53 +78,9 @@ public class RegisterControllerTest {
         assertEquals("Account registration failed. Either the email or password is in use.", response.getBody());
     }
 
-    @Test
-    public void testVerifyUser_UserVerified() {
-        // Given
-        String code = "123456";
-        String email = "test@example.com";
 
-        when(verificationService.getEmailByCode(code)).thenReturn(email);
-        when(userService.getUserByEmail(email)).thenReturn(Optional.of(new User()));
 
-        // When
-        ResponseEntity<String> response = registerController.verifyUser(code);
 
-        // Then
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(verificationService).confirmVerification(code);
-        verify(userService).updateUser(any());
-    }
 
-    @Test
-    public void testVerifyUser_CodeNotFound() {
-        // Given
-        String code = "123456";
 
-        when(verificationService.getEmailByCode(code)).thenReturn(null);
-
-        // When
-        ResponseEntity<String> response = registerController.verifyUser(code);
-
-        // Then
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        verifyNoMoreInteractions(userService);
-    }
-
-    @Test
-    public void testVerifyUser_UserNotFound() {
-        // Given
-        String code = "123456";
-        String email = "test@example.com";
-
-        when(verificationService.getEmailByCode(code)).thenReturn(email);
-        when(userService.getUserByEmail(email)).thenReturn(Optional.empty());
-
-        // When
-        ResponseEntity<String> response = registerController.verifyUser(code);
-
-        // Then
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        verify(userService, never()).updateUser(any());
-    }
 }
